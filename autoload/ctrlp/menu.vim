@@ -73,7 +73,13 @@ func! ctrlp#menu#accept(mode, str)
   endif
   " plugins
   let target = filter(copy(g:ctrlp_ext_vars), 'v:val.sname ==# sname')[0]
-  if !empty(target)
+  if target.sname=='bft'
+    cal ctrlp#init(ctrlp#buffertag#cmd(0))
+  elseif target.sname=='lns'
+    cal ctrlp#init(ctrlp#line#cmd('buf'))
+  elseif target.sname=='chs'
+	  cal ctrlp#init(ctrlp#changes#cmd('fil'))
+  elseif !empty(target)
     call ctrlp#init(call(substitute(target.accept, '#accept', '#id', ''),[]))
   endif
 endfunc
